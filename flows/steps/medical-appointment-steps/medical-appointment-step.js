@@ -4,6 +4,10 @@ const {
   linkForMedicalAppointments,
 } = require('../../../config/constants/conversation');
 const { invalidOption } = require('../../../config/constants/messages');
+const {
+  updateLastTimeUserInteraction,
+  isLastInteractionHaveLongTime,
+} = require('../../../services/user.service');
 
 const { delay } = require('../../../helpers');
 const { isCorrectRange } = require('../../../validators');
@@ -24,6 +28,14 @@ const medicalAppointmentStep = addKeyword(keywords, {
         const optionTyped = ctx.body;
 
         await delay(2000);
+
+        const isLongTimeFromLastInter = await isLastInteractionHaveLongTime(
+          phone
+        );
+        await updateLastTimeUserInteraction(phone);
+        if (isLongTimeFromLastInter) {
+          return;
+        }
 
         const isValid = isCorrectRange([1, 2, 3], Number(optionTyped));
 

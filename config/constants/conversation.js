@@ -1,3 +1,7 @@
+const { EVENTS } = require('@bot-whatsapp/bot');
+
+const HOUR = 60 * 60 * 1000;
+const DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION = 2 * HOUR;
 const linkForThirdVariation1 = {
   1: {
     message: 'https://agendalo.io/anna-equipo/equipo-medico',
@@ -67,12 +71,7 @@ const optionsForTreatmentToShow = [
 
 const conversation = {
   welcomeStep: {
-    keywords: [
-      'hola',
-      'ola',
-      'buenos',
-      'Hola estoy interesado(a) en el servicio!',
-    ],
+    keywords: [EVENTS.WELCOME],
     questions: [`¡Hola{{name}}!`, '*Anna* te da la bienvenida 😃'],
   },
   fullNameStep: {
@@ -243,4 +242,5 @@ module.exports = {
   greatMessage,
   linkForMedicalAppointments,
   linkForExamFromHome,
+  DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION,
 };

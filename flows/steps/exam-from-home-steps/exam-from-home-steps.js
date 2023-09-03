@@ -5,6 +5,10 @@ const { examFromHomeTurnStep } = require('./exam-from-home-turn');
 
 const { delay } = require('../../../helpers');
 const { isCorrectRange } = require('../../../validators');
+const {
+  updateLastTimeUserInteraction,
+  isLastInteractionHaveLongTime,
+} = require('../../../services/user.service');
 const { cache } = require('../../../config/cache');
 
 const { scheduleExamFromHome } = conversation;
@@ -24,6 +28,14 @@ const examFromHomeStep = addKeyword(keywords, {
         const phone = ctx.from;
 
         await delay(2000);
+
+        const isLongTimeFromLastInter = await isLastInteractionHaveLongTime(
+          phone
+        );
+        await updateLastTimeUserInteraction(phone);
+        if (isLongTimeFromLastInter) {
+          return;
+        }
 
         const isValid = isCorrectRange([1, 2, 3, 4], Number(optionTyped));
 

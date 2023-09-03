@@ -2,6 +2,10 @@ const { addKeyword } = require('@bot-whatsapp/bot');
 const { conversation } = require('../../../config/constants/conversation');
 const { invalidOption } = require('../../../config/constants/messages');
 const { isCorrectRange } = require('../../../validators');
+const {
+  updateLastTimeUserInteraction,
+  isLastInteractionHaveLongTime,
+} = require('../../../services/user.service');
 
 const {
   medicalAppointmentStep,
@@ -28,6 +32,16 @@ const menuStepFlow = addKeyword(keywords)
     async (ctx, { flowDynamic, fallBack, gotoFlow }) => {
       try {
         const optionTyped = ctx.body;
+        const phone = ctx.phone;
+
+        const isLongTimeFromLastInter = await isLastInteractionHaveLongTime(
+          phone
+        );
+        await updateLastTimeUserInteraction(phone);
+        if (isLongTimeFromLastInter) {
+          return;
+        }
+
         const isValid = isCorrectRange([1, 2, 3, 4], Number(optionTyped));
 
         await delay(2000);
