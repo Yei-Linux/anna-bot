@@ -1,7 +1,7 @@
 const { EVENTS } = require('@bot-whatsapp/bot');
 
 const HOUR = 60 * 60 * 1000;
-const DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION = 60 * 1000;
+const DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION = 2 * HOUR;
 const linkForThirdVariation1 = {
   1: {
     message: 'https://agendalo.io/anna-equipo/equipo-medico',
