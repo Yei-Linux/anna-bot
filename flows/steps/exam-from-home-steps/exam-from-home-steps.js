@@ -1,6 +1,9 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 const { conversation } = require('../../../config/constants/conversation');
-const { invalidOption } = require('../../../config/constants/messages');
+const {
+  invalidOption,
+  invalidOptionForLongTime,
+} = require('../../../config/constants/messages');
 const { examFromHomeTurnStep } = require('./exam-from-home-turn');
 
 const { delay } = require('../../../helpers');
@@ -27,17 +30,29 @@ const examFromHomeStep = addKeyword(keywords, {
         const optionTyped = ctx.body;
         const phone = ctx.from;
 
-        await delay(2000);
-
         const isLongTimeFromLastInter = await isLastInteractionHaveLongTime(
           phone
         );
         await updateLastTimeUserInteraction(phone);
         if (isLongTimeFromLastInter) {
-          return;
+          await flowDynamic(['Que bueno verte por aquí otra vez!']);
         }
 
-        const isValid = isCorrectRange([1, 2, 3, 4], Number(optionTyped));
+        const isValid = isCorrectRange([1, 2, 3, 4, 5], Number(optionTyped));
+
+        await delay(2000);
+
+        if (!isValid) {
+          const newInvalidOptionMessage = isLongTimeFromLastInter
+            ? [
+                invalidOptionForLongTime,
+                'Recuerda que puedes cerrar la conversacion seleccionando la opcion 5.',
+              ]
+            : invalidOption;
+          await flowDynamic(newInvalidOptionMessage);
+          await fallBack();
+          return false;
+        }
 
         if (!isValid) {
           await flowDynamic(invalidOption);
@@ -49,6 +64,11 @@ const examFromHomeStep = addKeyword(keywords, {
           await flowDynamic([
             'En unos momentos, te estaremos atendiendo. Estamos derivando a un asesor para poder resolver tu consulta',
           ]);
+          return;
+        }
+
+        if (optionTyped == '5') {
+          await flowDynamic(['Nos vemos pronto!']);
           return;
         }
 

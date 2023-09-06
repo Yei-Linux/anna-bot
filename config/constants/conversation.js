@@ -1,7 +1,7 @@
 const { EVENTS } = require('@bot-whatsapp/bot');
 
 const HOUR = 60 * 60 * 1000;
-const DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION = 2 * HOUR;
+const DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION = 60 * 1000;
 const linkForThirdVariation1 = {
   1: {
     message: 'https://agendalo.io/anna-equipo/equipo-medico',
@@ -100,6 +100,7 @@ const conversation = {
         '*2. Agenda tu Examen a domicilio*',
         '*3. Conócete mejor. Haz tu test de salud aquí*',
         '*4. Otras consultas*',
+        '*5. Terminar conversacion*',
       ],
     ],
   },
@@ -129,6 +130,7 @@ const conversation = {
         ' - Creatina en Sangre',
         ' - Microalbuminuria en orina',
         '*4. ¿No encuentras tu examen?*',
+        '*5. Terminar conversacion*',
       ],
     ],
   },

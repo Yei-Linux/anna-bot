@@ -7,10 +7,6 @@ const {
 const { cache } = require('../../../config/cache');
 const { delay } = require('../../../helpers');
 const { isCorrectRange } = require('../../../validators');
-const {
-  updateLastTimeUserInteraction,
-  isLastInteractionHaveLongTime,
-} = require('../../../services/user.service');
 const { invalidOption } = require('../../../config/constants/messages');
 
 const { scheduleExamFromHomeChooseTurn } = conversation;
@@ -30,14 +26,6 @@ const examFromHomeTurnStep = addKeyword(keywords, {
         const phone = ctx.from;
 
         await delay(2000);
-
-        const isLongTimeFromLastInter = await isLastInteractionHaveLongTime(
-          phone
-        );
-        await updateLastTimeUserInteraction(phone);
-        if (isLongTimeFromLastInter) {
-          return;
-        }
 
         const isValid = isCorrectRange([1, 2], Number(optionTyped));
 

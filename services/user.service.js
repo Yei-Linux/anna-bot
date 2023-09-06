@@ -10,9 +10,16 @@ const isLastInteractionHaveLongTime = async (phone) => {
   try {
     const cl = await client();
     const user = await cl.db.collection('users').findOne({ phone });
-    if (!user) return;
+
+    if (!user) {
+      return false;
+    }
+    if (!user.lastInteraction) {
+      return false;
+    }
     const milisecondsDiffUntilLastTime =
-      currentTimestamp - user.lastInteraction;
+      new Date(currentTimestamp) - new Date(user.lastInteraction);
+
     const isLongTime =
       milisecondsDiffUntilLastTime >
       DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION;
@@ -45,12 +52,16 @@ const updateLastTimeUserInteraction = async (phone) => {
 };
 
 const updateUser = async (phone, set) => {
-  const timestamp = getTimestamp();
+  const lastInteraction = getTimestamp();
   try {
     const cl = await client();
     await cl.db
       .collection('users')
-      .updateOne({ phone }, { $set: { ...set, timestamp } }, { upsert: true });
+      .updateOne(
+        { phone },
+        { $set: { ...set, lastInteraction } },
+        { upsert: true }
+      );
   } catch (error) {
     console.log('Error: ', error);
     throw new Error('Error', error);

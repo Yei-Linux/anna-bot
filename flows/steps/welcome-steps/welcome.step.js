@@ -4,7 +4,10 @@ const {
   conversation,
   alreadyUserRegistered,
 } = require('../../../config/constants/conversation');
-const { findUserByPhone } = require('../../../services');
+const {
+  findUserByPhone,
+  updateLastTimeUserInteraction,
+} = require('../../../services');
 const { delay } = require('../../../helpers');
 
 const { genderStepFlow } = require('./gender.step');
@@ -35,6 +38,7 @@ const surveyEntry = addKeyword([]).addAnswer(
         return;
       }
 
+      await updateLastTimeUserInteraction(phone);
       gotoFlow(menuStepFlow);
       return;
     } catch (error) {}

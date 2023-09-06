@@ -1,7 +1,10 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 const { conversation } = require('../../../config/constants/conversation');
 const { invalidOption } = require('../../../config/constants/messages');
-const { updateUser } = require('../../../services/user.service');
+const {
+  updateUser,
+  updateLastTimeUserInteraction,
+} = require('../../../services/user.service');
 const { isCorrectRange } = require('../../../validators');
 
 const { menuStepFlow } = require('../menu-steps/menu.step');
@@ -27,6 +30,7 @@ const genderStepFlow = addKeyword(keywords)
       await delay(2000);
 
       if (!isValid) {
+        await updateLastTimeUserInteraction(phone);
         await flowDynamic(invalidOption);
         await fallBack();
         return;
