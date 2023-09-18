@@ -11,23 +11,29 @@ const { client } = require('./config/db/Singleton.db');
 const { welcomeStepFlow } = require('./flows/steps/welcome-steps/welcome.step');
 
 const main = async () => {
-  const adapterDB = new MongoAdapter({
-    dbUri: MONGO_DB_URI,
-    dbName: MONGO_DB_NAME,
-  });
-  const adapterFlow = createFlow([welcomeStepFlow]);
-  const adapterProvider = createProvider(BaileysProvider);
+  try {
+    const adapterDB = new MongoAdapter({
+      dbUri: MONGO_DB_URI,
+      dbName: MONGO_DB_NAME,
+    });
+    const adapterFlow = createFlow([welcomeStepFlow]);
+    const adapterProvider = createProvider(BaileysProvider);
 
-  createBot({
-    flow: adapterFlow,
-    provider: adapterProvider,
-    database: adapterDB,
-  });
+    createBot({
+      flow: adapterFlow,
+      provider: adapterProvider,
+      database: adapterDB,
+    });
 
-  QRPortalWeb();
+    QRPortalWeb();
 
-  await client();
-  cache();
+    await client();
+    cache();
+  } catch (error) {
+    setTimeout(() => {
+      main();
+    }, 10 * 1000);
+  }
 };
 
 main();
