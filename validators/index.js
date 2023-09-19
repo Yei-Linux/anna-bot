@@ -1,3 +1,7 @@
+const getOptionTyped = (optionTyped) => {
+  return optionTyped.replace(/\./g, '').trim();
+};
+
 const isCorrectRange = (options, optionTyped) => {
   return options.includes(optionTyped);
 };
@@ -17,4 +21,5 @@ const isCorrectDocumentNumber = (documentNumber) => {
 module.exports = {
   isCorrectRange,
   isCorrectDocumentNumber,
+  getOptionTyped,
 };

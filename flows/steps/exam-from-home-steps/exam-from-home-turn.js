@@ -6,7 +6,7 @@ const {
 
 const { cache } = require('../../../config/cache');
 const { delay } = require('../../../helpers');
-const { isCorrectRange } = require('../../../validators');
+const { isCorrectRange, getOptionTyped } = require('../../../validators');
 const { invalidOption } = require('../../../config/constants/messages');
 
 const { scheduleExamFromHomeChooseTurn } = conversation;
@@ -22,7 +22,7 @@ const examFromHomeTurnStep = addKeyword(keywords, {
     { capture: true },
     async (ctx, { fallBack, flowDynamic }) => {
       try {
-        const optionTyped = ctx.body;
+        const optionTyped = getOptionTyped(ctx.body);
         const phone = ctx.from;
 
         await delay(2000);

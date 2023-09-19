@@ -7,7 +7,7 @@ const {
 const { examFromHomeTurnStep } = require('./exam-from-home-turn');
 
 const { delay } = require('../../../helpers');
-const { isCorrectRange } = require('../../../validators');
+const { isCorrectRange, getOptionTyped } = require('../../../validators');
 const {
   updateLastTimeUserInteraction,
   isLastInteractionHaveLongTime,
@@ -25,9 +25,9 @@ const examFromHomeStep = addKeyword(keywords, {
   .addAnswer(
     question2,
     { capture: true },
-    async (ctx, { fallBack, flowDynamic }) => {
+    async (ctx, { fallBack, flowDynamic, gotoFlow }) => {
       try {
-        const optionTyped = ctx.body;
+        const optionTyped = getOptionTyped(ctx.body);
         const phone = ctx.from;
 
         const isLongTimeFromLastInter = await isLastInteractionHaveLongTime(
@@ -74,6 +74,8 @@ const examFromHomeStep = addKeyword(keywords, {
 
         const phoneCache = cache().get(phone) ?? {};
         cache().set(phone, { ...phoneCache, examFromHomeAnswer: optionTyped });
+
+        await gotoFlow(examFromHomeTurnStep);
       } catch (error) {
         console.log('Error: ', error);
       }

@@ -5,7 +5,7 @@ const {
 } = require('../services');
 
 const { invalidOption } = require('../config/constants/messages');
-const { isCorrectRange } = require('../validators');
+const { isCorrectRange, getOptionTyped } = require('../validators');
 const { cache } = require('../config/cache');
 
 const handleQuestionProcess = async ({
@@ -17,11 +17,12 @@ const handleQuestionProcess = async ({
   answerPoints,
   isFirstQuestion = false,
 }) => {
+  const optionTypedModified = getOptionTyped(optionTyped);
   const validRange = Array.from(
     { length: answerPoints.length },
     (_, i) => i + 1
   );
-  const isValid = isCorrectRange(validRange, Number(optionTyped));
+  const isValid = isCorrectRange(validRange, Number(optionTypedModified));
 
   if (!isValid) {
     await flowDynamic(invalidOption);
@@ -48,8 +49,14 @@ const handleQuestionProcess = async ({
     }
   }
 
-  const point = answerPoints[optionTyped - 1];
-  await insertQuestionWithAnswer(question, optionTyped, phone, examId, point);
+  const point = answerPoints[optionTypedModified - 1];
+  await insertQuestionWithAnswer(
+    question,
+    optionTypedModified,
+    phone,
+    examId,
+    point
+  );
 
   return examId;
 };

@@ -10,7 +10,7 @@ const {
 
 const { delay } = require('../../../../helpers');
 const { completeExam, findLastExamByPhone } = require('../../../../services');
-const { isCorrectRange } = require('../../../../validators');
+const { isCorrectRange, getOptionTyped } = require('../../../../validators');
 
 const { resultsStepVariation2 } = conversation;
 const { keywords, questions } = resultsStepVariation2;
@@ -23,7 +23,7 @@ const resultsStepVariation2Step = addKeyword(keywords)
     question3,
     { capture: true },
     async (ctx, { flowDynamic, fallBack, endFlow }) => {
-      const optionTyped = ctx.body;
+      const optionTyped = getOptionTyped(ctx.body);
       const phone = ctx.from;
 
       await delay(2000);

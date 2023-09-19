@@ -6,7 +6,7 @@ const {
 const { invalidOption } = require('../../../config/constants/messages');
 
 const { delay } = require('../../../helpers');
-const { isCorrectRange } = require('../../../validators');
+const { isCorrectRange, getOptionTyped } = require('../../../validators');
 
 const { scheduleMedicalAppointment } = conversation;
 const { keywords, questions } = scheduleMedicalAppointment;
@@ -21,7 +21,7 @@ const medicalAppointmentStep = addKeyword(keywords, {
     { capture: true },
     async (ctx, { fallBack, flowDynamic }) => {
       try {
-        const optionTyped = ctx.body;
+        const optionTyped = getOptionTyped(ctx.body);
 
         await delay(2000);
 

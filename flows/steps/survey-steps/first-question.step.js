@@ -32,6 +32,7 @@ const firstSurveyQuestionStep = addKeyword(keywords, {
       });
 
       if (!isContinue) return;
+      await gotoFlow(secondSurveyQuestionStep);
     },
     [secondSurveyQuestionStep]
   );

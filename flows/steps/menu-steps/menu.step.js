@@ -4,7 +4,7 @@ const {
   invalidOption,
   invalidOptionForLongTime,
 } = require('../../../config/constants/messages');
-const { isCorrectRange } = require('../../../validators');
+const { isCorrectRange, getOptionTyped } = require('../../../validators');
 const {
   updateLastTimeUserInteraction,
   isLastInteractionHaveLongTime,
@@ -34,7 +34,7 @@ const menuStepFlow = addKeyword(keywords)
     },
     async (ctx, { flowDynamic, fallBack, gotoFlow }) => {
       try {
-        const optionTyped = ctx.body;
+        const optionTyped = getOptionTyped(ctx.body);
         const phone = ctx.from;
 
         const isLongTimeFromLastInter = await isLastInteractionHaveLongTime(

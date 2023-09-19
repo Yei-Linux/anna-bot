@@ -5,7 +5,7 @@ const {
   updateUser,
   updateLastTimeUserInteraction,
 } = require('../../../services/user.service');
-const { isCorrectRange } = require('../../../validators');
+const { isCorrectRange, getOptionTyped } = require('../../../validators');
 
 const { menuStepFlow } = require('../menu-steps/menu.step');
 const { delay } = require('../../../helpers');
@@ -22,8 +22,8 @@ const genderStepFlow = addKeyword(keywords)
       capture: true,
     },
     async (ctx, { flowDynamic, fallBack, gotoFlow }) => {
+      const optionTyped = getOptionTyped(ctx.body);
       const phone = ctx.from;
-      const optionTyped = ctx.body;
 
       const isValid = isCorrectRange([1, 2], Number(optionTyped));
 
