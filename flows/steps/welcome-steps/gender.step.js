@@ -37,11 +37,7 @@ const genderStepFlow = addKeyword(keywords)
       }
 
       await updateUser(phone, { phone, genderId: optionTyped });
-      await flowDynamic([
-        'Listo',
-        'Para poder brindarte un diagnóstico adecuado te haremos unas preguntas.',
-        'Te tomará 30 segundos.',
-      ]);
+      await flowDynamic(['¿Qué deseas hacer hoy?`']);
       await gotoFlow(menuStepFlow);
       return;
     }

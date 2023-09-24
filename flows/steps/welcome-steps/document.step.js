@@ -16,7 +16,6 @@ const { keywords, questions } = documentStep;
 const [question1] = questions;
 
 const documentStepFlow = addKeyword(keywords)
-  .addAnswer('')
   .addAnswer(
     question1,
     {

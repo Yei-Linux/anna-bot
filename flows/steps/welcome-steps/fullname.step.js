@@ -5,7 +5,7 @@ const {
 } = require('../../../config/constants/conversation');
 const { updateUser } = require('../../../services/user.service');
 
-const { documentStepFlow } = require('./document.step');
+const { genderStepFlow } = require('./gender.step');
 const { delay } = require('../../../helpers');
 
 const { fullNameStep } = conversation;
@@ -26,9 +26,8 @@ const fullNameStepFlow = addKeyword(keywords)
       await delay(2000);
 
       await updateUser(phone, { fullName, phone });
-      await flowDynamic([greatMessage]);
     },
-    [documentStepFlow]
+    [genderStepFlow]
   );
 
 module.exports = { fullNameStepFlow };

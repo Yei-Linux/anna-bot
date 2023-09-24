@@ -1,6 +1,7 @@
 const invalidDocumentNumber = 'Dni Inválido';
-const invalidOption = 'Opción Inválida';
-const invalidOptionForLongTime = 'La opción que ingresaste es inválida.';
+const invalidOption =
+  'Lo siento no comprendi, la opción que ingresaste no es válida.';
+const invalidOptionForLongTime = 'La opción que ingresaste no es válida.';
 
 module.exports = {
   invalidDocumentNumber,

@@ -8,8 +8,8 @@ const { invalidOption } = require('../../../config/constants/messages');
 const { delay } = require('../../../helpers');
 const { isCorrectRange, getOptionTyped } = require('../../../validators');
 
-const { scheduleMedicalAppointment } = conversation;
-const { keywords, questions } = scheduleMedicalAppointment;
+const { scheduleMedicalAppointmentGeneral } = conversation;
+const { keywords, questions } = scheduleMedicalAppointmentGeneral;
 const [question1, question2] = questions;
 
 const medicalAppointmentStep = addKeyword(keywords, {
@@ -25,7 +25,7 @@ const medicalAppointmentStep = addKeyword(keywords, {
 
         await delay(2000);
 
-        const isValid = isCorrectRange([1, 2, 3], Number(optionTyped));
+        const isValid = isCorrectRange([1, 2], Number(optionTyped));
 
         if (!isValid) {
           await flowDynamic(invalidOption);

@@ -72,7 +72,7 @@ const optionsForTreatmentToShow = [
 const conversation = {
   welcomeStep: {
     keywords: [EVENTS.WELCOME],
-    questions: [`¡Hola{{name}}!`, '*Anna* te da la bienvenida 😃'],
+    questions: [`¡Hola!`, `¡Hola{{name}}!. ¿Qué deseas hacer hoy?`],
   },
   fullNameStep: {
     keywords: [],
@@ -93,26 +93,40 @@ const conversation = {
   menuStep: {
     keywords: ['.'],
     questions: [
-      `¿Qué deseas hacer hoy?`,
       [
         noteForOptions,
-        '*1. Agenda una consulta virtual*',
-        '*2. Agenda tu Examen a domicilio*',
-        '*3. Conócete mejor. Haz tu test de salud aquí*',
-        '*4. Otras consultas*',
-        '*5. Terminar conversacion*',
+        '*1. Requiero una cita rápida (Medicina general)*',
+        '*2. Requiero una cita médica especializada en diabetes, pulmonía, azucar alta, hipertensión,etc.*',
+        '*3. Examen de domicilio*',
+        '*4. Quiero hacer mi test de salud (Diabetes)*',
+        '*5. Deseo hablar con un asesor*',
       ],
     ],
   },
-  scheduleMedicalAppointment: {
+  scheduleMedicalAppointmentGeneral: {
     keywords: [/^(\.)?[1]{1,1}(\.)?$/],
     questions: [
       `Selecciona tu horario ideal`,
-      [noteForOptions, '*1. Mañana*', '*2. Tarde*', '*3. Noche*'],
+      [noteForOptions, '*1. Mañana*', '*2. Noche*'],
+    ],
+  },
+  scheduleMedicalAppointmentSpecialist: {
+    keywords: [/^(\.)?[2]{1,1}(\.)?$/],
+    questions: [
+      `De acuerdo {{name}}, para comenzar  con tu cita. Vamos a iniciar con tu examen de sangre a domicilio para que el doctor pueda conocerte mejor.`,
+      [`¿Estás de acuerdo?`, '*1. Si*', '*2. No*'],
+    ],
+  },
+  acceptMedicalAppointmentSpecialist: {
+    keywords: [/^(\.)?[1]{1,1}(\.)?$/],
+    questions: [
+      `Excelente elección {{name}} porque el examen de sangre tiene un pequeño costo a domicilio (S/) pero te llevas la consulta completamente gratis. Podrás pagarlo cuando el equipo medico llegue  a tu casa.`,
+      'Porfavor comentame tu horario ideal para que el equipo médico pueda atenderte',
+      'Listo. Un asesor se comunicará contigo. Muchas gracias',
     ],
   },
   scheduleExamFromHome: {
-    keywords: [/^(\.)?[2]{1,1}(\.)?$/],
+    keywords: [/^(\.)?[3]{1,1}(\.)?$/],
     questions: [
       `Selecciona tu plan de laboratorio:`,
       [

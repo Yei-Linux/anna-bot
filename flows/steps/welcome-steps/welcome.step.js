@@ -11,7 +11,6 @@ const {
 const { delay } = require('../../../helpers');
 
 const { genderStepFlow } = require('./gender.step');
-const { documentStepFlow } = require('./document.step');
 const { fullNameStepFlow } = require('./fullname.step');
 
 const { menuStepFlow } = require('../menu-steps/menu.step');
@@ -29,10 +28,6 @@ const surveyEntry = addKeyword([]).addAnswer(
     try {
       const user = await findUserByPhone(phone);
 
-      if (!user.documentNumber) {
-        gotoFlow(documentStepFlow);
-        return;
-      }
       if (!user.genderId) {
         gotoFlow(genderStepFlow);
         return;
@@ -43,43 +38,31 @@ const surveyEntry = addKeyword([]).addAnswer(
       return;
     } catch (error) {}
   },
-  [menuStepFlow, documentStepFlow, genderStepFlow]
+  [menuStepFlow, genderStepFlow]
 );
 
-const welcomeStepFlow = addKeyword(keywords)
-  .addAction(async (ctx, { flowDynamic }) => {
+const welcomeStepFlow = addKeyword(keywords).addAction(
+  async (ctx, { flowDynamic }) => {
     const phone = ctx.from;
     await delay(1000);
 
     try {
       const user = await findUserByPhone(phone);
-      const question1Template = question1.replaceAll(
-        '{{name}}',
-        !user ? '' : ` ${user.fullName}`
-      );
+      const question1Template = !user
+        ? question1
+        : question2.replaceAll('{{name}}', !user ? '' : ` ${user.fullName}`);
       await flowDynamic([question1Template]);
-    } catch (error) {}
-  })
-  .addAnswer(
-    question2,
-    null,
-    async (ctx, { gotoFlow }) => {
-      const phone = ctx.from;
-      await delay(1000);
 
-      try {
-        const user = await findUserByPhone(phone);
-        if (user) {
-          gotoFlow(surveyEntry);
-          return;
-        }
-
-        gotoFlow(fullNameStepFlow);
+      if (user) {
+        gotoFlow(surveyEntry);
         return;
-      } catch (error) {}
-    },
-    [fullNameStepFlow, surveyEntry]
-  );
+      }
+
+      gotoFlow(fullNameStepFlow);
+      return;
+    } catch (error) {}
+  }
+);
 
 module.exports = {
   welcomeStepFlow,
