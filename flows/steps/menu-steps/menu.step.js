@@ -1,8 +1,5 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
-const {
-  conversation,
-  linkForMedicalAppointments,
-} = require('../../../config/constants/conversation');
+const { conversation } = require('../../../config/constants/conversation');
 const {
   invalidOption,
   invalidOptionForLongTime,
@@ -16,6 +13,9 @@ const {
 const {
   medicalAppointmentStep,
 } = require('../medical-appointment-steps/medical-appointment-step');
+const {
+  medicalAppointmentSpecialistStep,
+} = require('../medical-appointment-specialist-steps/medical-appointment-specialist-steps');
 const {
   examFromHomeStep,
 } = require('../exam-from-home-steps/exam-from-home-steps');
@@ -64,7 +64,7 @@ const menuStepFlow = addKeyword(keywords).addAnswer(
         return;
       }
       if (optionTyped == '2') {
-        await flowDynamic([linkForMedicalAppointments[2].message]);
+        await gotoFlow(medicalAppointmentSpecialistStep);
         return;
       }
       if (optionTyped == '3') {
@@ -80,14 +80,19 @@ const menuStepFlow = addKeyword(keywords).addAnswer(
       }
 
       await flowDynamic([
-        'A partir de este momento, cualquiera de nuestros asesores se comunicara contigo mediante Whatsapp o mediante llamada. Estate atent@, porfavor',
+        'A partir de este momento, cualquiera de nuestros asesores se comunicara contigo mediante Whatsapp o mediante llamada. Estate atent@, porfavor 👮‍♀️',
       ]);
       return;
     } catch (error) {
       console.log('Error: ', error);
     }
   },
-  [medicalAppointmentStep, examFromHomeStep, firstSurveyQuestionStep]
+  [
+    medicalAppointmentStep,
+    medicalAppointmentSpecialistStep,
+    examFromHomeStep,
+    firstSurveyQuestionStep,
+  ]
 );
 
 module.exports = { menuStepFlow };

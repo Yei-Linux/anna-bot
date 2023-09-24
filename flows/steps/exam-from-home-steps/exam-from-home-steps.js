@@ -62,13 +62,13 @@ const examFromHomeStep = addKeyword(keywords, {
 
         if (optionTyped == '4') {
           await flowDynamic([
-            'En unos momentos, te estaremos atendiendo. Estamos derivando a un asesor para poder resolver tu consulta',
+            'En unos momentos, te estaremos atendiendo. Estamos derivando a un asesor para poder resolver tu consulta 👮‍♀️',
           ]);
           return;
         }
 
         if (optionTyped == '5') {
-          await flowDynamic(['Nos vemos pronto!']);
+          await flowDynamic(['Nos vemos pronto! 😄']);
           return;
         }
 

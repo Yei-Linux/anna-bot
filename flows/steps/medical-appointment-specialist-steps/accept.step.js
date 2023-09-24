@@ -2,6 +2,10 @@ const { addKeyword } = require('@bot-whatsapp/bot');
 const { conversation } = require('../../../config/constants/conversation');
 
 const { delay } = require('../../../helpers');
+const {
+  findUserByPhone,
+  updateLastTimeUserInteraction,
+} = require('../../../services/user.service');
 
 const { acceptMedicalAppointmentSpecialist } = conversation;
 const { keywords, questions } = acceptMedicalAppointmentSpecialist;
@@ -22,7 +26,10 @@ const acceptStep = addKeyword(keywords, {
     { capture: true },
     async (ctx, { fallBack, flowDynamic }) => {
       try {
+        const phone = ctx.from;
+
         await delay(2000);
+        await updateLastTimeUserInteraction(phone);
         await flowDynamic(question3);
       } catch (error) {
         console.log('Error: ', error);

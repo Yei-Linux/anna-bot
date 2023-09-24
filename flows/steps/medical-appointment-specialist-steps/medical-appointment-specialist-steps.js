@@ -8,6 +8,11 @@ const { invalidOption } = require('../../../config/constants/messages');
 const { delay } = require('../../../helpers');
 const { isCorrectRange, getOptionTyped } = require('../../../validators');
 const { acceptStep } = require('./accept.step');
+const {
+  updateLastTimeUserInteraction,
+  isLastInteractionHaveLongTime,
+  findUserByPhone,
+} = require('../../../services/user.service');
 
 const { scheduleMedicalAppointmentSpecialist } = conversation;
 const { keywords, questions } = scheduleMedicalAppointmentSpecialist;
@@ -28,7 +33,16 @@ const medicalAppointmentSpecialistStep = addKeyword(keywords, {
     { capture: true },
     async (ctx, { fallBack, flowDynamic, gotoFlow }) => {
       try {
+        const phone = ctx.from;
         const optionTyped = getOptionTyped(ctx.body);
+
+        const isLongTimeFromLastInter = await isLastInteractionHaveLongTime(
+          phone
+        );
+        await updateLastTimeUserInteraction(phone);
+        if (isLongTimeFromLastInter) {
+          await flowDynamic(['Que bueno verte por aquí otra vez!']);
+        }
 
         await delay(2000);
 
@@ -42,9 +56,9 @@ const medicalAppointmentSpecialistStep = addKeyword(keywords, {
 
         if (optionTyped == '2') {
           await flowDynamic([
-            'Oh entiendo, tal vez ya tienes los resultados de tu examen. Vamos directo a tu consulta',
+            'Oh entiendo, tal vez ya tienes los resultados de tu examen. Vamos directo a tu consulta 🙂',
             'Solo haz clic aquí y podrás reservar tu cita:',
-            linkForMedicalAppointments[2].message,
+            linkForMedicalAppointments[3].message,
           ]);
           return;
         }

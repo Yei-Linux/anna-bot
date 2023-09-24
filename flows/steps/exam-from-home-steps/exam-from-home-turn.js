@@ -8,6 +8,9 @@ const { cache } = require('../../../config/cache');
 const { delay } = require('../../../helpers');
 const { isCorrectRange, getOptionTyped } = require('../../../validators');
 const { invalidOption } = require('../../../config/constants/messages');
+const {
+  updateLastTimeUserInteraction,
+} = require('../../../services/user.service');
 
 const { scheduleExamFromHomeChooseTurn } = conversation;
 const { keywords, questions } = scheduleExamFromHomeChooseTurn;
@@ -43,12 +46,13 @@ const examFromHomeTurnStep = addKeyword(keywords, {
         const { message } = messageOption;
         const subjectPaymentMessage =
           phoneCache && phoneCache.examFromHomeAnswer
-            ? `Segun lo que seleccionaste seria: "Anna - Pago por el Plan ${phoneCache.examFromHomeAnswer}"`
+            ? `Segun lo que seleccionaste seria: "Anna - Pago por el Plan ${phoneCache.examFromHomeAnswer}" 🙆`
             : '';
 
+        await updateLastTimeUserInteraction(phone);
         await flowDynamic([
           message,
-          'Recuerda colocar a la hora de hacer el pago indicar que plan estas pagando.',
+          'Recuerda colocar a la hora de hacer el pago indicar que plan estas pagando. 😄',
           subjectPaymentMessage,
         ]);
         return;

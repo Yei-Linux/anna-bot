@@ -9,7 +9,11 @@ const {
 } = require('../../../../config/constants/conversation');
 
 const { delay } = require('../../../../helpers');
-const { completeExam, findLastExamByPhone } = require('../../../../services');
+const {
+  completeExam,
+  findLastExamByPhone,
+  updateLastTimeUserInteraction,
+} = require('../../../../services');
 const { isCorrectRange, getOptionTyped } = require('../../../../validators');
 
 const { resultsStepVariation2 } = conversation;
@@ -47,6 +51,7 @@ const resultsStepVariation2Step = addKeyword(keywords)
         await completeExam(phone, currentExam.examId);
       }
 
+      await updateLastTimeUserInteraction(phone);
       await flowDynamic([
         firstFinalMessageToShow,
         message,

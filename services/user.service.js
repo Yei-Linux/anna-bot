@@ -4,7 +4,10 @@ const {
 } = require('../config/constants/conversation');
 const { getTimestamp } = require('../helpers/date');
 
-const isLastInteractionHaveLongTime = async (phone) => {
+const isLastInteractionHaveLongTime = async (
+  phone,
+  diffAllowed = DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION
+) => {
   const currentTimestamp = getTimestamp();
 
   try {
@@ -20,9 +23,7 @@ const isLastInteractionHaveLongTime = async (phone) => {
     const milisecondsDiffUntilLastTime =
       new Date(currentTimestamp) - new Date(user.lastInteraction);
 
-    const isLongTime =
-      milisecondsDiffUntilLastTime >
-      DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION;
+    const isLongTime = milisecondsDiffUntilLastTime > diffAllowed;
 
     return isLongTime;
   } catch (error) {

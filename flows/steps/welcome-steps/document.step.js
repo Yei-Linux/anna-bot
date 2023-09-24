@@ -1,7 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 const {
   conversation,
-  greatMessage,
 } = require('../../../config/constants/conversation');
 const { invalidDocumentNumber } = require('../../../config/constants/messages');
 const { updateUser } = require('../../../services/user.service');
@@ -36,7 +35,6 @@ const documentStepFlow = addKeyword(keywords)
       }
 
       await updateUser(phone, { phone, documentNumber });
-      await flowDynamic([greatMessage]);
       await gotoFlow(genderStepFlow);
       return;
     }

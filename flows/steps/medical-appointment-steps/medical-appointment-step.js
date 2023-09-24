@@ -7,6 +7,9 @@ const { invalidOption } = require('../../../config/constants/messages');
 
 const { delay } = require('../../../helpers');
 const { isCorrectRange, getOptionTyped } = require('../../../validators');
+const {
+  updateLastTimeUserInteraction,
+} = require('../../../services/user.service');
 
 const { scheduleMedicalAppointmentGeneral } = conversation;
 const { keywords, questions } = scheduleMedicalAppointmentGeneral;
@@ -21,6 +24,7 @@ const medicalAppointmentStep = addKeyword(keywords, {
     { capture: true },
     async (ctx, { fallBack, flowDynamic }) => {
       try {
+        const phone = ctx.from;
         const optionTyped = getOptionTyped(ctx.body);
 
         await delay(2000);
@@ -37,6 +41,7 @@ const medicalAppointmentStep = addKeyword(keywords, {
         if (!messageOption) return;
 
         const { message } = messageOption;
+        await updateLastTimeUserInteraction(phone);
         return flowDynamic([message]);
       } catch (error) {
         console.log('Error: ', error);

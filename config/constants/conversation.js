@@ -1,7 +1,10 @@
 const { EVENTS } = require('@bot-whatsapp/bot');
 
-const HOUR = 60 * 60 * 1000;
+const MINUTE = 60 * 1000;
+const HOUR = 60 * MINUTE;
 const DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION = 2 * HOUR;
+const DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION_WHEN_FINISHED_CONVERSATION =
+  5 * MINUTE;
 const linkForThirdVariation1 = {
   1: {
     message: 'https://agendalo.io/anna-equipo/equipo-medico',
@@ -33,11 +36,11 @@ const linkForMedicalAppointments = {
   },
   2: {
     message:
-      'Haz clic aquí para agendar tu cita virtual: https://agendalo.io/anna-equipo/turno-tarde',
+      'Haz clic aquí para agendar tu cita virtual: https://agendalo.io/anna-equipo/turno-noche',
   },
   3: {
     message:
-      'Haz clic aquí para agendar tu cita virtual: https://agendalo.io/anna-equipo/turno-noche',
+      'Haz clic aquí para agendar tu cita virtual: https://agendalo.io/anna-equipo/turno-tarde',
   },
 };
 
@@ -52,10 +55,8 @@ const linkForExamFromHome = {
   },
 };
 
-const greatMessage = 'Genial 😃!';
 const missingDocumentNumberMessage = 'Nos falta tener tu dni 😃';
 const missingGenderMessage = 'Nos falta tener tu sexo 😃';
-const alreadyUserRegistered = 'Genial ya te encuentra registrado 😃!';
 
 const firstFinalMessageToShow = `Agenda un consulta virtual aqui.`;
 const secondFinalMessageToShow =
@@ -64,15 +65,23 @@ const secondFinalMessageToShow =
 const noteForOptions = 'Escribe el numero para seleccionar la opcion';
 const optionsForTreatmentToShow = [
   noteForOptions,
-  '*1. Mañana*',
-  '*2. Tarde*',
-  '*3. Noche*',
+  '*1. Mañana ☀️*',
+  '*2. Tarde 🌥️*',
+  '*3. Noche 🌙*',
 ];
+
+const warningImBot =
+  'Recuerda que soy un bot, a continuacion te mostrare un Menú ( si tienes una consulta marca la opción 5 )';
 
 const conversation = {
   welcomeStep: {
     keywords: [EVENTS.WELCOME],
-    questions: [`¡Hola!`, `¡Hola{{name}}!. ¿Qué deseas hacer hoy?`],
+    questions: [
+      `¡Hola!`,
+      `¡Hola{{name}}! ¿Qué deseas hacer hoy?`,
+      `¡Hola! ${warningImBot}`,
+      `¡Hola{{name}}! ${warningImBot}`,
+    ],
   },
   fullNameStep: {
     keywords: [],
@@ -86,7 +95,7 @@ const conversation = {
     keywords: ['.'],
     questions: [
       'Por favor indícanos tu sexo',
-      [noteForOptions, '*1.Masculino*', '*2.Femenino*'],
+      [noteForOptions, '*1.Masculino 🧑*', '*2.Femenino 👩*'],
     ],
   },
 
@@ -94,65 +103,65 @@ const conversation = {
     keywords: ['.'],
     questions: [
       [
+        '*1. Requiero una cita rápida (Medicina general) ⚡*',
+        '*2. Requiero una cita médica especializada en diabetes, pulmonía, azucar alta, hipertensión,etc.🥋*',
+        '*3. Examen de domicilio 🏠*',
+        '*4. Quiero hacer mi test de salud (Diabetes) 📚*',
+        '*5. Deseo hablar con un asesor 🙆*',
         noteForOptions,
-        '*1. Requiero una cita rápida (Medicina general)*',
-        '*2. Requiero una cita médica especializada en diabetes, pulmonía, azucar alta, hipertensión,etc.*',
-        '*3. Examen de domicilio*',
-        '*4. Quiero hacer mi test de salud (Diabetes)*',
-        '*5. Deseo hablar con un asesor*',
       ],
     ],
   },
   scheduleMedicalAppointmentGeneral: {
     keywords: [/^(\.)?[1]{1,1}(\.)?$/],
     questions: [
-      `Selecciona tu horario ideal`,
-      [noteForOptions, '*1. Mañana*', '*2. Noche*'],
+      `Dime cuál es tu horario ideal`,
+      [noteForOptions, '*1. Mañana ☀️*', '*2. Noche 🌙*'],
     ],
   },
   scheduleMedicalAppointmentSpecialist: {
     keywords: [/^(\.)?[2]{1,1}(\.)?$/],
     questions: [
       `De acuerdo {{name}}, para comenzar  con tu cita. Vamos a iniciar con tu examen de sangre a domicilio para que el doctor pueda conocerte mejor.`,
-      [`¿Estás de acuerdo?`, '*1. Si*', '*2. No*'],
+      [`¿Estás de acuerdo? ${noteForOptions}`, '*1. Si ✅*', '*2. No ✅*'],
     ],
   },
   acceptMedicalAppointmentSpecialist: {
     keywords: [/^(\.)?[1]{1,1}(\.)?$/],
     questions: [
       `Excelente elección {{name}} porque el examen de sangre tiene un pequeño costo a domicilio (S/) pero te llevas la consulta completamente gratis. Podrás pagarlo cuando el equipo medico llegue  a tu casa.`,
-      'Porfavor comentame tu horario ideal para que el equipo médico pueda atenderte',
-      'Listo. Un asesor se comunicará contigo. Muchas gracias',
+      'Porfavor comentame tu horario ideal para que el equipo médico pueda atenderte 🤗',
+      'Listo 😄. Un asesor se comunicará contigo. Muchas gracias!',
     ],
   },
   scheduleExamFromHome: {
     keywords: [/^(\.)?[3]{1,1}(\.)?$/],
     questions: [
-      `Selecciona tu plan de laboratorio:`,
+      `Mira las opciones y selecciona tu plan de laboratorio:`,
       [
         noteForOptions,
-        '*1. Plan 1 (Precio: 80 soles + Domicilio: 40 soles):*',
+        '*1. Plan 1 (Precio: 80 soles + Domicilio: 40 soles): ✅*',
         ' - Hemoglobina',
         ' - Glucosa',
-        '*2. Plan 2 (Precio: 220 soles + Domicilio: 40 soles):*',
+        '*2. Plan 2 (Precio: 220 soles + Domicilio: 40 soles): ✅*',
         ' - Orina Completa',
         ' - Hemograma',
         ' - Perfil Lipidico',
         ' - Perfil Hepatico',
-        '*3. Plan 3 (Precio: 145 soles + Domicilio: 40 soles):*',
+        '*3. Plan 3 (Precio: 145 soles + Domicilio: 40 soles): ✅*',
         ' - Prueba de Tolerancia oral a la glucosa',
         ' - Creatina en Sangre',
         ' - Microalbuminuria en orina',
-        '*4. ¿No encuentras tu examen?*',
-        '*5. Terminar conversacion*',
+        '*4. ¿No encuentras tu examen? ✅*',
+        '*5. Terminar conversacion ✅*',
       ],
     ],
   },
   scheduleExamFromHomeChooseTurn: {
     keywords: [/^(\.)?[1-3]{1,1}(\.)?$/],
     questions: [
-      `Selecciona tu horario ideal`,
-      [noteForOptions, '*1. Mañana*', '*2. Tarde*'],
+      `Dime cuál es tu horario ideal`,
+      [noteForOptions, '*1. Mañana ☀️*', '*2. Tarde 🌥️*'],
     ],
   },
 
@@ -250,13 +259,12 @@ module.exports = {
   conversation,
   missingDocumentNumberMessage,
   missingGenderMessage,
-  alreadyUserRegistered,
   linkForThirdVariation1,
   linkForThirdVariation2,
   firstFinalMessageToShow,
   secondFinalMessageToShow,
-  greatMessage,
   linkForMedicalAppointments,
   linkForExamFromHome,
   DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION,
+  DIFF_MILISECONDS_ALLOWED_FROM_LAST_INTERACTION_WHEN_FINISHED_CONVERSATION,
 };

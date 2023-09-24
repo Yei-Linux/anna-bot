@@ -1,7 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 const {
   conversation,
-  greatMessage,
 } = require('../../../config/constants/conversation');
 const { updateUser } = require('../../../services/user.service');
 
