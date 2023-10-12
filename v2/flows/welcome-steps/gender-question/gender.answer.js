@@ -22,16 +22,18 @@ const genderAnswer = async ({
 }) => {
   try {
     const isValid = isCorrectButtonSelected(optionTyped, buttons);
-    await delay(2000);
+    await delay(1000);
 
     if (!isValid) {
       await updateLastTimeUserInteraction(phone);
-      await flowDynamic(invalidOption);
-      return await fallBack();
+      await flowDynamic(invalidOption, { delay: 1000 });
+      await fallBack();
+      return;
     }
 
     await updateUser(phone, { phone, genderId: optionTyped });
-    return await flowDynamic(['¡Anotado! Ultima pregunta']);
+    await flowDynamic('¡Anotado! Ultima pregunta', { delay: 1000 });
+    return;
   } catch (error) {
     logger.error(error.message);
   }

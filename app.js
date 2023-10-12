@@ -1,4 +1,5 @@
-const { cache, client } = require('./shared/config');
+const { cache, client, logger } = require('./shared/config');
+
 const { startup: startupV1 } = require('./v1/startup');
 const { startup: startupV2 } = require('./v2/startup');
 
@@ -8,7 +9,7 @@ const main = async () => {
     await client();
     cache();
   } catch (error) {
-    console.log('test????', error);
+    logger.error(error.message);
     setTimeout(() => {
       main();
     }, 10 * 1000);

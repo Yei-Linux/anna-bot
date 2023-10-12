@@ -7,7 +7,10 @@ const [question1] = questions;
 
 const bookATestStepFlow = addKeyword(keywords).addAnswer(
   question1,
-  null,
+  {
+    capture: false,
+    delay: 1000,
+  },
   async (ctx, {}) => {},
   []
 );

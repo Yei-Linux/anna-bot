@@ -1,6 +1,7 @@
 const {
   updateLastTimeUserInteraction,
 } = require('../../../../shared/services');
+const { delay } = require('../../../../shared/helpers');
 const { isCorrectListItemSelected } = require('../../../../shared/validators');
 const { logger } = require('../../../../shared/config');
 
@@ -16,10 +17,14 @@ const complaintsListAnswer = async ({
   fallBack,
 }) => {
   try {
+    await delay(1000);
     await updateLastTimeUserInteraction(phone);
     const isValid = isCorrectListItemSelected(optionTyped, listRowsParams);
 
-    if (!isValid) return await fallBack();
+    if (!isValid) {
+      await fallBack();
+      return;
+    }
     return;
   } catch (error) {
     logger.error(error.message);

@@ -7,6 +7,7 @@ const { delay } = require('../../../../shared/helpers');
 const { logger } = require('../../../../shared/config');
 
 const { INVALID_EMAIL } = require('../../../constants/messages');
+const { servicesMenuStepFlow } = require('../../services-menu');
 
 /**
  * Valid email. If its correct continue else fallback.
@@ -22,15 +23,18 @@ const emailAnswer = async ({
 }) => {
   try {
     const isValid = isValidEmail(email);
-    await delay(2000);
+    await delay(1000);
 
     if (!isValid) {
       await updateLastTimeUserInteraction(phone);
-      await flowDynamic(INVALID_EMAIL);
-      return await fallBack();
+      await flowDynamic(INVALID_EMAIL, { delay: 1000 });
+      await fallBack();
+      return;
     }
 
-    return await updateUser(phone, { phone, email });
+    await updateUser(phone, { phone, email });
+    await gotoFlow(servicesMenuStepFlow);
+    return;
   } catch (error) {
     logger.error(error.message);
   }

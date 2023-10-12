@@ -1,6 +1,7 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
 const { conversation } = require('../../../constants');
+const { appointmentDayStepFlow } = require('../appointment-day');
 const { appointmentTurnAnswer } = require('./appointment-turn.answer');
 
 const { appointmentTurnStep } = conversation;
@@ -14,6 +15,7 @@ const appointmentTurnStepFlow = addKeyword(keywords)
     {
       capture: true,
       buttons,
+      delay: 1000,
     },
     async (ctx, { flowDynamic, fallBack, gotoFlow }) => {
       await appointmentTurnAnswer({
@@ -26,7 +28,7 @@ const appointmentTurnStepFlow = addKeyword(keywords)
       });
       return;
     },
-    []
+    [appointmentDayStepFlow]
   );
 
 module.exports = { appointmentTurnStepFlow };

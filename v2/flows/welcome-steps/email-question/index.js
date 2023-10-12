@@ -1,6 +1,7 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
 const { conversation } = require('../../../constants');
+const { servicesMenuStepFlow } = require('../../services-menu');
 const { emailAnswer } = require('./email.answer');
 
 const { emailStep } = conversation;
@@ -11,6 +12,7 @@ const emailStepFlow = addKeyword(keywords).addAnswer(
   question1,
   {
     capture: true,
+    delay: 1000,
   },
   async (ctx, { flowDynamic, fallBack, gotoFlow }) => {
     await emailAnswer({
@@ -21,8 +23,7 @@ const emailStepFlow = addKeyword(keywords).addAnswer(
       phone: ctx.from,
     });
     return;
-  },
-  []
+  }
 );
 
 module.exports = { emailStepFlow };

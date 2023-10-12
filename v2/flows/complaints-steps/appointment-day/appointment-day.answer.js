@@ -1,6 +1,7 @@
 const {
   updateLastTimeUserInteraction,
 } = require('../../../../shared/services');
+const { delay } = require('../../../../shared/helpers');
 const { isCorrectListItemSelected } = require('../../../../shared/validators');
 const { logger } = require('../../../../shared/config');
 
@@ -19,11 +20,16 @@ const appointmentDayAnswer = async ({
   flowDynamic,
 }) => {
   try {
+    await delay(1000);
     await updateLastTimeUserInteraction(phone);
     const isValid = isCorrectListItemSelected(optionTyped, listRowsParams);
 
-    if (!isValid) return await fallBack();
-    return await flowDynamic(PAYMENT_MESSAGE);
+    if (!isValid) {
+      await fallBack();
+      return;
+    }
+    await flowDynamic(PAYMENT_MESSAGE, { delay: 1000 });
+    return;
   } catch (error) {
     logger.error(error.message);
   }

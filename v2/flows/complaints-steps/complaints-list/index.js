@@ -1,6 +1,7 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
 const { conversation } = require('../../../constants');
+const { appointmentTurnStepFlow } = require('../appointment-turn');
 const { complaintsListAnswer } = require('./complaints-list.answer');
 
 const { complaintsListStep } = conversation;
@@ -20,16 +21,17 @@ const complaintsListStepFlow = addKeyword(keywords)
   })
   .addAnswer(
     question1,
-    { capture: true },
+    { capture: true, delay: 1000 },
     async (ctx, { fallBack }) => {
-      return await complaintsListAnswer({
+      await complaintsListAnswer({
         optionTyped: ctx.body,
         phone: ctx.from,
         listRowsParams: list.listParams[0].rows,
         fallBack,
       });
+      return;
     },
-    []
+    [appointmentTurnStepFlow]
   );
 
 module.exports = { complaintsListStepFlow };

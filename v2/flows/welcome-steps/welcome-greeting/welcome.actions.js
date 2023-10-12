@@ -1,5 +1,4 @@
 const { conversation } = require('../../../constants');
-const { findUserByPhone } = require('../../../../shared/services');
 const { logger } = require('../../../../shared/config');
 
 const { welcomeStep } = conversation;
@@ -20,10 +19,8 @@ const getWelcomeMessageIfIsNewUserOrNot = ({
  * Function to show welcome message
  * @param {*} param0
  */
-const welcomeIsRegisteredUserAction = async ({ flowDynamic, phone }) => {
+const welcomeIsRegisteredUserAction = async ({ flowDynamic, user }) => {
   try {
-    const user = await findUserByPhone(phone);
-
     const welcomeMessageTemplateProps = {
       questionWithoutName: question1,
       questionWithName: question2,
@@ -32,7 +29,9 @@ const welcomeIsRegisteredUserAction = async ({ flowDynamic, phone }) => {
     const welcomeMessage = getWelcomeMessageIfIsNewUserOrNot(
       welcomeMessageTemplateProps
     );
-    return await flowDynamic([welcomeMessage]);
+
+    await flowDynamic(welcomeMessage, { delay: 1000 });
+    return;
   } catch (error) {
     logger.error(error.message);
   }

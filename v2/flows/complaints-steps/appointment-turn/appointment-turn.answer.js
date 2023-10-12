@@ -1,6 +1,7 @@
 const {
   updateLastTimeUserInteraction,
 } = require('../../../../shared/services');
+const { delay } = require('../../../../shared/helpers');
 const { isCorrectButtonSelected } = require('../../../../shared/validators');
 const { logger } = require('../../../../shared/config');
 
@@ -19,12 +20,14 @@ const appointmentTurnAnswer = async ({
   buttons,
 }) => {
   try {
+    await delay(1000);
     await updateLastTimeUserInteraction(phone);
     const isValid = isCorrectButtonSelected(optionTyped, buttons);
 
     if (!isValid) {
       await flowDynamic(invalidOption);
-      return await fallBack();
+      await fallBack();
+      return;
     }
     return;
   } catch (error) {

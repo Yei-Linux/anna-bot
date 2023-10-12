@@ -23,14 +23,15 @@ const servicesMenuStepFlow = addKeyword(keywords)
   })
   .addAnswer(
     question1,
-    { capture: true },
+    { capture: true, delay: 1000 },
     async (ctx, { fallBack }) => {
-      return await serviceMenuAnswer({
+      await serviceMenuAnswer({
         optionTyped: ctx.body,
         phone: ctx.from,
         listRowsParams: list.listParams[0].rows,
         fallBack,
       });
+      return;
     },
     [complaintsListStepFlow, bookATestStepFlow]
   );

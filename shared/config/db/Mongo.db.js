@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { logger } = require('../logger');
 
 class MongoDb {
   client;
@@ -24,7 +25,7 @@ class MongoDb {
       this.client = client;
       return this;
     } catch (error) {
-      console.log('Error: ', error);
+      logger.error(error.message);
       throw new Error('Error in connection', error);
     }
   }

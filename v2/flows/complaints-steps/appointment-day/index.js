@@ -20,15 +20,16 @@ const appointmentDayStepFlow = addKeyword(keywords)
   })
   .addAnswer(
     question1,
-    { capture: true },
+    { capture: true, delay: 1000 },
     async (ctx, { fallBack, flowDynamic }) => {
-      return await appointmentDayAnswer({
+      await appointmentDayAnswer({
         optionTyped: ctx.body,
         phone: ctx.from,
         listRowsParams: list.listParams[0].rows,
         fallBack,
         flowDynamic,
       });
+      return;
     },
     []
   );

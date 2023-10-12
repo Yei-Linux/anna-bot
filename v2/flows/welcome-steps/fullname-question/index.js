@@ -1,7 +1,7 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
-const { updateUser } = require('../../../../shared/services');
 const { delay } = require('../../../../shared/helpers');
+const { updateUser } = require('../../../../shared/services');
 const { conversation } = require('../../../constants');
 
 const { genderStepFlow } = require('../gender-question');
@@ -14,12 +14,13 @@ const fullNameStepFlow = addKeyword(keywords).addAnswer(
   question1,
   {
     capture: true,
+    delay: 2000,
   },
   async (ctx, { flowDynamic }) => {
     const phone = ctx.from;
-    await delay(2000);
     await updateUser(phone, { fullName: ctx.body, phone });
-    return await flowDynamic(['Genial 😄']);
+    await flowDynamic('Genial 😄', { delay: 1000 });
+    return;
   },
   [genderStepFlow]
 );

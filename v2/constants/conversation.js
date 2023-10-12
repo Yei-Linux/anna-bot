@@ -5,7 +5,7 @@ const conversation = {
     keywords: [EVENTS.WELCOME],
     questions: [
       `Bienvenido a Anna.😄`,
-      `¡Bienvenido de vuelta {{name}}¡😄  Soy Anna, tu asistente medico.`,
+      `¡Bienvenido de vuelta{{name}}¡😄 Soy Anna, tu asistente medico.`,
     ],
   },
   fullNameStep: {
@@ -25,7 +25,7 @@ const conversation = {
   servicesMenuStep: {
     keywords: ['.'],
     questions: [
-      'Porfavor, selecciona el servicio que necesitas de las opciones 😄',
+      'Por favor, selecciona el servicio que necesitas de las opciones 😄',
     ],
     list: {
       headerText: '',
@@ -56,7 +56,7 @@ const conversation = {
 
   complaintsListStep: {
     keywords: ['ID_1'],
-    questions: ['Porfavor, Selecciona tus síntomas de las opciones 😄'],
+    questions: ['Por favor, Selecciona tus síntomas de las opciones 😄'],
     list: {
       headerText: '',
       bodyText: 'Cuéntanos, ¿Cómo te sientes?',
@@ -68,70 +68,53 @@ const conversation = {
           rows: [
             {
               id: 'ID_1',
-              title: 'Creo que estoy resfriado/gripe',
-              description:
-                'Es posible que tengas algún proceso gripal, resfriado o alergia, por lo que te atenderá un MEDICO GENERAL',
+              title: 'Resfriado o alergia',
+              description: 'Te atenderá un MEDICO GENERAL',
             },
             {
               id: 'ID_2',
-              title:
-                'Creo que tengo tos persistente y dificultad para respirar',
-              description:
-                'Es posible que tengas alguna afección pulmonar, por lo que te atenderá un NEUMÓLOGO.',
+              title: 'Tos persistente',
+              description: 'Te atenderá un NEUMÓLOGO',
             },
             {
               id: 'ID_3',
-              title: 'Creo que sufro de Asma, Neumonía, EPOC o fibrosis',
-              description:
-                'Parece que tienes una afección pulmonar crónica, por lo que te atenderá un NEUMÓLOGO.',
+              title: 'Asma,Neumonía,EPOC',
+              description: 'Te atenderá un NEUMÓLOGO',
             },
             {
               id: 'ID_4',
               title: 'Me duele la cabeza',
-              description:
-                'Es importante abodar el origen y causa de los dolores, por lo que te atenderá un NEURÓLOGO.',
+              description: 'Te atenderá un NEURÓLOGO',
             },
             {
               id: 'ID_5',
-              title: 'Me duele el abdomen (estómago)',
-              description:
-                'Es posible que tengas alguna afección gatrointestinal, por lo que te atenderá un GATROENTEROLOGO.',
+              title: 'Me duele el estómago',
+              description: 'Te atenderá un GASTROENTEROLOGO',
             },
             {
               id: 'ID_6',
-              title: 'Creo que tengo una afección en la piel',
-              description:
-                'Es posible que tengas alguna afección en la piel, por lo que te atenderá un DERMATÓLOGO.',
+              title: 'Afección en la piel',
+              description: 'Te atenderá un DERMATÓLOGO',
             },
             {
               id: 'ID_7',
-              title: 'Creo que tengo Diabetes o Hipertiroidismo',
-              description:
-                'Es posible que tengas alguna afección endocrina crónica, por lo que te atenderá un ENDOCRINÓLOGO.',
+              title: 'Diabetes-Hipertiroidismo',
+              description: 'Te atenderá un ENDOCRINÓLOGO',
             },
             {
               id: 'ID_8',
-              title: 'Quiero hacerme un chequeo médico',
-              description:
-                'Es importante realizar un chequeo anual, a continuación te mostraremos nuestras opciones en paquetes de chequeo.',
+              title: 'Chequeo médico',
+              description: 'Es importante realizarte un chequeo para tu salud',
             },
             {
               id: 'ID_9',
-              title: 'Necesito atención con un nutricionista',
-              description:
-                'Es imporante un abordaje nutricional para la salud, te agendaremos una cita con un nutricionista.',
+              title: 'Quiero un Nutricionista',
+              description: 'Es imporante un abordaje nutricional para tu salud',
             },
             {
               id: 'ID_10',
-              title: 'Necesito atención con un psicólogo',
-              description:
-                'Es imporante un abordaje psicologico para la salud, te agendaremos una cita con un psicologo.',
-            },
-            {
-              id: 'ID_11',
-              title: 'No encontré en las opciones anteriores',
-              description:
-                'Por favor, cuentamos más sobre tus sintomas y encontraremos la atención médica que necesitas.',
+              title: 'Quiero un psicólogo',
+              description: 'Es imporante un abordaje psicologico para tu salud',
             },
           ],
         },
@@ -161,7 +144,7 @@ const conversation = {
 
   appointmentDayStep: {
     keywords: ['Mañana', 'Tarde', 'Noche'],
-    questions: ['Porfavor, selecciona el dia que tengas disponible 😄'],
+    questions: ['Por favor, selecciona el dia que tengas disponible 😄'],
     list: {
       headerText: '',
       bodyText: '¿Que día tienes disponible?',

@@ -9,6 +9,7 @@ const {
   medicalAppointmentSpecialistStep,
 } = require('../medical-appointment-specialist-steps');
 const { examFromHomeStep } = require('../exam-from-home-steps');
+const { firstSurveyQuestionStep } = require('../survey-steps');
 
 const { menuStep } = conversation;
 const { keywords, questions } = menuStep;

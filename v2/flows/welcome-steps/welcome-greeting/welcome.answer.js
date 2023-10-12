@@ -13,14 +13,20 @@ const { servicesMenuStepFlow } = require('../../services-menu');
  * @param {gotoFlow , phone} param0
  * @returns
  */
-const whichFlowAfterWelcome = async ({ gotoFlow, phone }) => {
+const whichFlowAfterWelcome = async ({ gotoFlow, phone, user }) => {
   try {
-    const user = await findUserByPhone(phone);
-    if (!user) return await gotoFlow(fullNameStepFlow);
-    if (!user.genderId) return await gotoFlow(genderStepFlow);
+    if (!user) {
+      await gotoFlow(fullNameStepFlow);
+      return;
+    }
+    if (!user.genderId) {
+      await gotoFlow(genderStepFlow);
+      return;
+    }
 
     await updateLastTimeUserInteraction(phone);
-    return await gotoFlow(servicesMenuStepFlow);
+    await gotoFlow(servicesMenuStepFlow);
+    return;
   } catch (error) {
     logger.error(error.message);
   }

@@ -13,6 +13,7 @@ const genderStepFlow = addKeyword(keywords).addAnswer(
   {
     capture: true,
     buttons,
+    delay: 1000,
   },
   async (ctx, { flowDynamic, fallBack, gotoFlow }) => {
     await genderAnswer({

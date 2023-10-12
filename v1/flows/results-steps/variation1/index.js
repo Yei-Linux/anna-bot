@@ -1,7 +1,7 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
-const { conversation } = require('../../../../config/constants/conversation');
-const { getOptionTyped } = require('../../../../validators');
+const { conversation } = require('../../../constants');
+const { getOptionTyped } = require('../../../../shared/validators');
 
 const { variation1Answer } = require('./variation1.answer');
 
