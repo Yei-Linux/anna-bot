@@ -1,11 +1,10 @@
-const { cache } = require('./config/cache');
-const { client } = require('./config/db/Singleton.db');
-
-const { startup } = require('./startups/startup-meta');
+const { cache, client } = require('./shared/config');
+const { startup: startupV1 } = require('./v1/startup');
+const { startup: startupV2 } = require('./v2/startup');
 
 const main = async () => {
   try {
-    startup();
+    startupV2();
     await client();
     cache();
   } catch (error) {

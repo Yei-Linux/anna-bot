@@ -1,7 +1,8 @@
 const {
   findUserByPhone,
   updateLastTimeUserInteraction,
-} = require('../../../../services');
+} = require('../../../../shared/services');
+const { logger } = require('../../../../shared/config');
 
 const { genderStepFlow } = require('../gender-question');
 const { fullNameStepFlow } = require('../fullname-question');

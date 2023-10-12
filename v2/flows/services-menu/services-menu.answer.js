@@ -1,5 +1,6 @@
-const { updateLastTimeUserInteraction } = require('../../../services');
-const { isCorrectListItemSelected } = require('../../../validators');
+const { updateLastTimeUserInteraction } = require('../../../shared/services');
+const { isCorrectListItemSelected } = require('../../../shared/validators');
+const { logger } = require('../../../shared/config');
 
 /**
  * Valid email. If its correct continue else fallback.
@@ -16,14 +17,10 @@ const serviceMenuAnswer = async ({
     await updateLastTimeUserInteraction(phone);
     const isValid = isCorrectListItemSelected(optionTyped, listRowsParams);
 
-    if (!isValid) {
-      return await fallBack();
-    }
-
+    if (!isValid) return await fallBack();
     return;
   } catch (error) {
-    console.error(error);
-    return;
+    logger.error(error.message);
   }
 };
 

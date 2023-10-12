@@ -1,7 +1,7 @@
-const { findUserByPhone } = require('../../../shared/services');
-const { logger } = require('../../../shared/config');
+const { findUserByPhone } = require('../../../../shared/services');
+const { logger } = require('../../../../shared/config');
 
-const { conversation } = require('../../constants');
+const { conversation } = require('../../../constants');
 const { scheduleMedicalAppointmentSpecialist } = conversation;
 const { _, questions } = scheduleMedicalAppointmentSpecialist;
 const [question1] = questions;

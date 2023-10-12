@@ -1,7 +1,7 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
-const { conversation } = require('../../../config/constants/conversation');
-const { delay } = require('../../../helpers');
+const { delay } = require('../../../../shared/helpers');
+const { conversation } = require('../../../constants');
 
 const { welcomeGreetingAction } = require('./welcome-greeting.action');
 const { whichFlowContinue } = require('./welcome-greeting.answer');

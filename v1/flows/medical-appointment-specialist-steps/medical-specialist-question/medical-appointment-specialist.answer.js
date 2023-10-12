@@ -1,12 +1,12 @@
 const {
   isLastInteractionHaveLongTime,
   updateLastTimeUserInteraction,
-} = require('../../../shared/services');
-const { isCorrectRange } = require('../../../shared/validators');
-const { delay } = require('../../../shared/helpers');
+} = require('../../../../shared/services');
+const { isCorrectRange } = require('../../../../shared/validators');
+const { delay } = require('../../../../shared/helpers');
+const { linkForMedicalAppointments } = require('../../../constants');
 
 const { acceptStep } = require('../accept-question');
-const { linkForMedicalAppointments } = require('../../constants');
 
 const medicalAppointmentSpecialistAnswer = async ({
   phone,

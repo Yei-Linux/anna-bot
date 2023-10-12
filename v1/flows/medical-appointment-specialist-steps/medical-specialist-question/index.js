@@ -1,5 +1,5 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
-const { conversation } = require('../../../config/constants/conversation');
+const { conversation } = require('../../../constants');
 
 const { acceptStep } = require('../accept-question');
 const {
