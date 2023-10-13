@@ -3,7 +3,7 @@ const {
 } = require('../../../../shared/services');
 const { delay } = require('../../../../shared/helpers');
 const { isCorrectListItemSelected } = require('../../../../shared/validators');
-const { logger } = require('../../../../shared/config');
+const { logger, cache } = require('../../../../shared/config');
 
 /**
  * Valid email. If its correct continue else fallback.
@@ -25,6 +25,11 @@ const complaintsListAnswer = async ({
       await fallBack();
       return;
     }
+
+    cache().upsertStore(phone, {}, (store) => ({
+      ...store,
+      booking: { ...(store.booking ?? {}), diseaseOption: optionTyped },
+    }));
     return;
   } catch (error) {
     logger.error(error.message);

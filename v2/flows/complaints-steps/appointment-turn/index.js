@@ -1,5 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
+const { isInactiveForGettingResponse } = require('../../../../shared/services');
 const { conversation } = require('../../../constants');
 const { appointmentDayStepFlow } = require('../appointment-day');
 const { appointmentTurnAnswer } = require('./appointment-turn.answer');
@@ -17,12 +18,16 @@ const appointmentTurnStepFlow = addKeyword(keywords)
       buttons,
       delay: 1000,
     },
-    async (ctx, { flowDynamic, fallBack, gotoFlow }) => {
+    async (ctx, { flowDynamic, fallBack, gotoFlow, endFlow }) => {
+      const phone = ctx.from;
+      const isInactive = await isInactiveForGettingResponse({ phone, endFlow });
+      if (isInactive) return;
+
       await appointmentTurnAnswer({
         gotoFlow,
         flowDynamic,
         fallBack,
-        phone: ctx.from,
+        phone,
         optionTyped: ctx.body,
         buttons,
       });

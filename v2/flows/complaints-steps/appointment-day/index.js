@@ -1,5 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
+const { isInactiveForGettingResponse } = require('../../../../shared/services');
 const { conversation } = require('../../../constants');
 const { appointmentDayAnswer } = require('./appointment-day.answer');
 
@@ -21,10 +22,14 @@ const appointmentDayStepFlow = addKeyword(keywords)
   .addAnswer(
     question1,
     { capture: true, delay: 1000 },
-    async (ctx, { fallBack, flowDynamic }) => {
+    async (ctx, { fallBack, flowDynamic, endFlow }) => {
+      const phone = ctx.from;
+      const isInactive = await isInactiveForGettingResponse({ phone, endFlow });
+      if (isInactive) return;
+
       await appointmentDayAnswer({
         optionTyped: ctx.body,
-        phone: ctx.from,
+        phone,
         listRowsParams: list.listParams[0].rows,
         fallBack,
         flowDynamic,

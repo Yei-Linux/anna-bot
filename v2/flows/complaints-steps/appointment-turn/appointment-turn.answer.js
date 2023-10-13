@@ -3,7 +3,7 @@ const {
 } = require('../../../../shared/services');
 const { delay } = require('../../../../shared/helpers');
 const { isCorrectButtonSelected } = require('../../../../shared/validators');
-const { logger } = require('../../../../shared/config');
+const { logger, cache } = require('../../../../shared/config');
 
 const { invalidOption } = require('../../../constants');
 
@@ -29,6 +29,11 @@ const appointmentTurnAnswer = async ({
       await fallBack();
       return;
     }
+
+    cache().upsertStore(phone, {}, (store) => ({
+      ...store,
+      booking: { ...(store.booking ?? {}), turn: optionTyped },
+    }));
     return;
   } catch (error) {
     logger.error(error.message);

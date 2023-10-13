@@ -1,5 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
+const { isInactiveForGettingResponse } = require('../../../../shared/services');
 const { conversation } = require('../../../constants');
 const { appointmentTurnStepFlow } = require('../appointment-turn');
 const { complaintsListAnswer } = require('./complaints-list.answer');
@@ -22,10 +23,14 @@ const complaintsListStepFlow = addKeyword(keywords)
   .addAnswer(
     question1,
     { capture: true, delay: 1000 },
-    async (ctx, { fallBack }) => {
+    async (ctx, { fallBack, endFlow }) => {
+      const phone = ctx.from;
+      const isInactive = await isInactiveForGettingResponse({ phone, endFlow });
+      if (isInactive) return;
+
       await complaintsListAnswer({
         optionTyped: ctx.body,
-        phone: ctx.from,
+        phone,
         listRowsParams: list.listParams[0].rows,
         fallBack,
       });

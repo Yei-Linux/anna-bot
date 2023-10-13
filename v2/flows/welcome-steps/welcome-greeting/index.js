@@ -1,7 +1,10 @@
 const { addKeyword } = require('@bot-whatsapp/bot');
 
 const { delay } = require('../../../../shared/helpers');
-const { findUserByPhone } = require('../../../../shared/services');
+const {
+  findUserByPhone,
+  isInactiveForGettingResponse,
+} = require('../../../../shared/services');
 const { conversation } = require('../../../constants');
 
 const { welcomeIsRegisteredUserAction } = require('./welcome.actions');
@@ -18,7 +21,10 @@ const { keywords } = welcomeStep;
  * Welcome Step Flow - First Step
  */
 const welcomeStepFlow = addKeyword(keywords)
-  .addAction(async (ctx, { flowDynamic }) => {
+  .addAction(async (ctx, { endFlow }) => {
+    const phone = ctx.from;
+    const isInactive = await isInactiveForGettingResponse({ phone, endFlow });
+    if (isInactive) return;
     return;
   })
   .addAnswer(

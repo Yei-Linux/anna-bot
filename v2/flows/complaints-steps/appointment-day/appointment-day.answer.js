@@ -1,9 +1,10 @@
 const {
   updateLastTimeUserInteraction,
+  insertBookingAppointment,
 } = require('../../../../shared/services');
 const { delay } = require('../../../../shared/helpers');
 const { isCorrectListItemSelected } = require('../../../../shared/validators');
-const { logger } = require('../../../../shared/config');
+const { logger, cache } = require('../../../../shared/config');
 
 const { PAYMENT_MESSAGE } = require('../../../constants');
 
@@ -28,6 +29,16 @@ const appointmentDayAnswer = async ({
       await fallBack();
       return;
     }
+
+    const userCache = cache().get(phone);
+    if (userCache && userCache.booking) {
+      const bookingAppointment = {
+        ...userCache.booking,
+        day: optionTyped,
+      };
+      await insertBookingAppointment(phone, bookingAppointment);
+    }
+
     await flowDynamic(PAYMENT_MESSAGE, { delay: 1000 });
     return;
   } catch (error) {

@@ -25,7 +25,14 @@ function cache() {
   SingletonCache.init();
 
   const store = SingletonCache.cache;
-  return store;
+  return {
+    ...store,
+    upsertStore: (key, objToAdd = {}, cb = (storeValue) => storeValue) => {
+      const elementCache = store.get(key) ?? {};
+      const storeGot = cb(elementCache);
+      store.set(key, { ...storeGot, ...objToAdd });
+    },
+  };
 }
 
 module.exports = {
