@@ -21,7 +21,6 @@ const startup = () => {
     numberId: META_NUMBER_ID,
     verifyToken: META_VERIFY_TOKEN,
     version: 'v16.0',
-    port: 80,
   });
 
   createBot({
