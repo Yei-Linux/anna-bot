@@ -22,6 +22,7 @@ const complaintsListAnswer = async ({
     const isValid = isCorrectListItemSelected(optionTyped, listRowsParams);
 
     if (!isValid) {
+      console.log('invalid: ', optionTyped);
       await fallBack();
       return;
     }

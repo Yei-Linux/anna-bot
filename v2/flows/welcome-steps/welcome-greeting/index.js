@@ -11,6 +11,7 @@ const { welcomeIsRegisteredUserAction } = require('./welcome.actions');
 const { whichFlowAfterWelcome } = require('./welcome.answer');
 
 const { genderStepFlow } = require('../gender-question');
+const { emailStepFlow } = require('../email-question');
 const { fullNameStepFlow } = require('../fullname-question');
 const { servicesMenuStepFlow } = require('../../services-menu');
 
@@ -46,7 +47,7 @@ const welcomeStepFlow = addKeyword(keywords)
       await whichFlowAfterWelcome({ gotoFlow, phone, user });
       return;
     },
-    [servicesMenuStepFlow, fullNameStepFlow, genderStepFlow]
+    [servicesMenuStepFlow, fullNameStepFlow, genderStepFlow, emailStepFlow]
   );
 
 module.exports = {

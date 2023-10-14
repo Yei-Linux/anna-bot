@@ -1,10 +1,10 @@
 const {
-  findUserByPhone,
   updateLastTimeUserInteraction,
 } = require('../../../../shared/services');
 const { logger, cache } = require('../../../../shared/config');
 
 const { genderStepFlow } = require('../gender-question');
+const { emailStepFlow } = require('../email-question');
 const { fullNameStepFlow } = require('../fullname-question');
 const { servicesMenuStepFlow } = require('../../services-menu');
 
@@ -24,6 +24,11 @@ const whichFlowAfterWelcome = async ({ gotoFlow, phone, user }) => {
 
     if (!user.genderId) {
       await gotoFlow(genderStepFlow);
+      return;
+    }
+
+    if (!user.email) {
+      await gotoFlow(emailStepFlow);
       return;
     }
 
