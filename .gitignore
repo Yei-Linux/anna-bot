@@ -28,4 +28,5 @@ bot.qr.png
 node_modules
 
 .env
+.env.prod
 bot_sessions
