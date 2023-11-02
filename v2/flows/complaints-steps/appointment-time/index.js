@@ -2,14 +2,13 @@ const { addKeyword } = require('@bot-whatsapp/bot');
 
 const { isInactiveForGettingResponse } = require('../../../../shared/services');
 const { conversation } = require('../../../constants');
-const { appointmentTimeStepFlow } = require('../appointment-time');
-const { appointmentDayAnswer } = require('./appointment-day.answer');
+const { appointmentTimeAnswer } = require('./appoinment-time.answer');
 
-const { appointmentDayStep } = conversation;
-const { keywords, questions, list } = appointmentDayStep;
+const { appointmentTimeStep } = conversation;
+const { keywords, questions, list } = appointmentTimeStep;
 const [question1] = questions;
 
-const appointmentDayStepFlow = addKeyword(keywords)
+const appointmentTimeStepFlow = addKeyword(keywords)
   .addAction(async (ctx, { provider }) => {
     return await provider.sendList(
       ctx.from,
@@ -28,7 +27,7 @@ const appointmentDayStepFlow = addKeyword(keywords)
       const isInactive = await isInactiveForGettingResponse({ phone, endFlow });
       if (isInactive) return;
 
-      await appointmentDayAnswer({
+      await appointmentTimeAnswer({
         optionTyped: ctx.body,
         phone,
         listRowsParams: list.listParams[0].rows,
@@ -37,7 +36,7 @@ const appointmentDayStepFlow = addKeyword(keywords)
       });
       return;
     },
-    [appointmentTimeStepFlow]
+    []
   );
 
-module.exports = { appointmentDayStepFlow };
+module.exports = { appointmentTimeStepFlow };

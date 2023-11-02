@@ -6,16 +6,19 @@ const { delay } = require('../../../../shared/helpers');
 const { isCorrectListItemSelected } = require('../../../../shared/validators');
 const { logger, cache } = require('../../../../shared/config');
 
+const { PAYMENT_MESSAGE } = require('../../../constants');
+
 /**
- * Valid email. If its correct continue else fallback.
+ * aims to validate and save time
  * @param {gotoFlow, fallBack, flowDynamic, email } param0
  * @returns
  */
-const appointmentDayAnswer = async ({
+const appointmentTimeAnswer = async ({
   optionTyped,
   phone,
   listRowsParams,
   fallBack,
+  flowDynamic,
 }) => {
   try {
     await delay(1000);
@@ -27,14 +30,20 @@ const appointmentDayAnswer = async ({
       return;
     }
 
-    cache().upsertStore(phone, {}, (store) => ({
-      ...store,
-      booking: { ...(store.booking ?? {}), day: optionTyped },
-    }));
+    const userCache = cache().get(phone);
+    if (userCache && userCache.booking) {
+      const bookingAppointment = {
+        ...userCache.booking,
+        time: optionTyped,
+      };
+      await insertBookingAppointment(phone, bookingAppointment);
+    }
+
+    await flowDynamic(PAYMENT_MESSAGE, { delay: 1000 });
     return;
   } catch (error) {
     logger.error(error.message);
   }
 };
 
-module.exports = { appointmentDayAnswer };
+module.exports = { appointmentTimeAnswer };

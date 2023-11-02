@@ -195,6 +195,74 @@ const conversation = {
     },
   },
 
+  appointmentTimeStep: {
+    keywords: ['ID_1', 'ID_2', 'ID_3', 'ID_4', 'ID_5', 'ID_6', 'ID_7'],
+    questions: ['Por favor, selecciona la hora que tengas disponible 😄'],
+    list: {
+      headerText: '',
+      bodyText: '¿Que hora tienes disponible?',
+      footerText: '',
+      buttonList: 'Selecciona la hora',
+      listParams: [
+        {
+          title: 'Selecciona la hora',
+          rows: [
+            {
+              id: 'ID_1',
+              title: '9 a 10',
+              description: '',
+            },
+            {
+              id: 'ID_2',
+              title: '10 a 11',
+              description: '',
+            },
+            {
+              id: 'ID_3',
+              title: '11 a 12',
+              description: '',
+            },
+            {
+              id: 'ID_4',
+              title: '12 a 13',
+              description: '',
+            },
+            {
+              id: 'ID_5',
+              title: '13 a 14',
+              description: '',
+            },
+            {
+              id: 'ID_6',
+              title: '14 a 15',
+              description: '',
+            },
+            {
+              id: 'ID_7',
+              title: '15 a 16',
+              description: '',
+            },
+            {
+              id: 'ID_8',
+              title: '16 a 17',
+              description: '',
+            },
+            {
+              id: 'ID_9',
+              title: '17 a 18',
+              description: '',
+            },
+            {
+              id: 'ID_10',
+              title: '18 a 19',
+              description: '',
+            },
+          ],
+        },
+      ],
+    },
+  },
+
   medicalTestStep: {
     keywords: ['ID_2'],
     questions: [

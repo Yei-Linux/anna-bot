@@ -3,9 +3,9 @@ const INVALID_EMAIL =
 const PAYMENT_MESSAGE = `
 Para confirmar tu reserva con el médico hoy realiza tu pago de S/49 en las siguientes cuentas:
 
-  Yape/Plin: 
-  Transferencia BCP: 
-  Codigo interbancario: 
+  Yape: 992 428 082
+  Numero de Cuenta BCP: 19276394390048
+  Codigo interbancario: 00219217639439004832
 
 Nota: Para poder corroborar que hayas realizado el pago correctamente. Porfavor envía la foto o la captura aquí
 `;
