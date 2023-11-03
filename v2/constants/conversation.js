@@ -5,7 +5,7 @@ const conversation = {
     keywords: [EVENTS.WELCOME],
     questions: [
       `Bienvenido a Anna.😄`,
-      `¡Bienvenido de vuelta{{name}}¡😄 Soy Anna, tu asistente medico.`,
+      `¡Bienvenido de vuelta{{name}}¡😄 Soy Anna, tu asistente médico.`,
     ],
   },
   fullNameStep: {
@@ -29,7 +29,7 @@ const conversation = {
     ],
     list: {
       headerText: '',
-      bodyText: 'Estos son algunos de los servicios que tenemos para ti',
+      bodyText: 'Estos son algunos de los servicios que tenemos para ti👇',
       footerText: '',
       buttonList: 'Nuestros servicios',
       listParams: [
@@ -59,7 +59,7 @@ const conversation = {
     questions: ['Por favor, Selecciona tus síntomas de las opciones 😄'],
     list: {
       headerText: '',
-      bodyText: 'Cuéntanos, ¿Cómo te sientes?',
+      bodyText: 'Cuéntanos, ¿Cómo te sientes?👇',
       footerText: '',
       buttonList: 'Lista de Síntomas',
       listParams: [
@@ -89,7 +89,7 @@ const conversation = {
             {
               id: 'ID_5',
               title: 'Me duele el estómago',
-              description: 'Te atenderá un GASTROENTEROLOGO',
+              description: 'Te atenderá un GASTROENTERÓLOGO',
             },
             {
               id: 'ID_6',
@@ -109,7 +109,8 @@ const conversation = {
             {
               id: 'ID_9',
               title: 'Quiero un Nutricionista',
-              description: 'Es imporante un abordaje nutricional para tu salud',
+              description:
+                'Es importante un abordaje nutricional para tu salud',
             },
             {
               id: 'ID_10',
@@ -144,10 +145,10 @@ const conversation = {
 
   appointmentDayStep: {
     keywords: ['Mañana', 'Tarde', 'Noche'],
-    questions: ['Por favor, selecciona el dia que tengas disponible 😄'],
+    questions: ['Por favor, selecciona el día que tengas disponible 😄'],
     list: {
       headerText: '',
-      bodyText: '¿Que día tienes disponible?',
+      bodyText: '¿Que día tienes disponible?👇',
       footerText: '',
       buttonList: 'Selecciona el día',
       listParams: [
@@ -200,7 +201,7 @@ const conversation = {
     questions: ['Por favor, selecciona la hora que tengas disponible 😄'],
     list: {
       headerText: '',
-      bodyText: '¿Que hora tienes disponible?',
+      bodyText: '¿Qué hora tienes disponible?👇',
       footerText: '',
       buttonList: 'Selecciona la hora',
       listParams: [
